@@ -31,8 +31,8 @@ jobs:
       env: 
         SESSION_ID: ${{ secrets.SESSION_ID }}
         URL: ${{ secrets.URL }}
-        USERNAME: ${{ secrets.WEBUSERNAME }}
-        PASSWORD: ${{ secrets.WEBPASSWORD }}
+        WEBUSERNAME: ${{ secrets.WEBUSERNAME }}
+        WEBPASSWORD: ${{ secrets.WEBPASSWORD }}
       run: |
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
