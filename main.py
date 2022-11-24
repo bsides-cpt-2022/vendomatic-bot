@@ -9,24 +9,30 @@ admin_cookie = { 'name' : 'PHPSESSID',
                     'httpOnly' : False
                 }
 
-extra_header = { 'Authorization' : 'Bearer ' + os.environ.get('AUTH')}
+http_credentials = {
+                        'username' : os.environ.get('WEBUSERNAME'),
+                        'password' : os.environ.get('WEBPASSWORD')
+                    }
+
+extra_header_ua = { 'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.35' }
 
 async def print_console_output(output):
     print(f'noticed output in the console log - {output}')
 
-async def print_request(url):
-    print(f'made a request - {url}')
+async def print_request(request):
+    print(f'made a request - url: {request.url}')
 
 async def main():
     async with async_playwright() as p:
 
         # setup
         browser = await p.chromium.launch()
-        context = await browser.new_context()
+        context = await browser.new_context(http_credentials=http_credentials)
         await context.add_cookies([admin_cookie])
-        await context.set_extra_http_headers(extra_header)
+        await context.set_extra_http_headers(extra_header_ua)
         page = await context.new_page()
         page.on("console", print_console_output)
+        page.on("requestfailed", lambda request: print(request.url + " " + request.failure.error_text))
         page.on("request", print_request)
 
         # @todo - point to admin page
