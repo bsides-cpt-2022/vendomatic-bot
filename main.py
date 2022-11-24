@@ -4,14 +4,14 @@ from playwright.async_api import async_playwright
 
 admin_cookie = { 'name' : 'PHPSESSID',
                     # @todo - make this a secret?
-                    'value' : os.environ['SESSION_ID'],
-                    'url' : os.environ['URL'],
+                    'value' : os.getenv('SESSION_ID'),
+                    'url' : os.getenv('URL'),
                     'httpOnly' : False
                 }
 
 http_credentials = {
-                        'username' : os.environ['WEBUSERNAME'],
-                        'password' : os.environ['WEBPASSWORD']
+                        'username' : os.getenv('WEBUSERNAME'),
+                        'password' : os.getenv('WEBPASSWORD')
                     }
 
 extra_header_ua = { 'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.35' }
