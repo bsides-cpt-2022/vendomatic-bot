@@ -1,10 +1,11 @@
+import os
 import asyncio
 from playwright.async_api import async_playwright
 
 admin_cookie = { 'name' : 'PHPSESSID',
                     # @todo - make this a secret?
-                    'value' : '4cccc2eb849c864e99049365fe55f988',
-                    'url' : 'http://localhost:8080',
+                    'value' : os.environ.get('SESSION_ID'),
+                    'url' : os.environ.get('URL'),
                     'httpOnly' : False
                 }
 
@@ -26,7 +27,7 @@ async def main():
         page.on("request", print_request)
 
         # @todo - point to admin page
-        await page.goto('http://localhost:8080/index.php')
+        await page.goto(os.environ.get('URL'))
  
         await page.wait_for_selector(selector="#grid_table", state='visible', timeout=10000)
 
