@@ -9,6 +9,8 @@ admin_cookie = { 'name' : 'PHPSESSID',
                     'httpOnly' : False
                 }
 
+extra_header = { 'Authorization' : 'Bearer ' + os.environ.get('AUTH')}
+
 async def print_console_output(output):
     print(f'noticed output in the console log - {output}')
 
@@ -22,6 +24,7 @@ async def main():
         browser = await p.chromium.launch()
         context = await browser.new_context()
         await context.add_cookies([admin_cookie])
+        await context.set_extra_http_headers(extra_header)
         page = await context.new_page()
         page.on("console", print_console_output)
         page.on("request", print_request)
