@@ -10,8 +10,8 @@ admin_cookie = { 'name' : 'PHPSESSID',
                 }
 
 http_credentials = {
-                        'username' : os.environ.get('WEBUSERNAME'),
-                        'password' : os.environ.get('WEBPASSWORD')
+                        'username' : str(os.environ.get('WEBUSERNAME')),
+                        'password' : str(os.environ.get('WEBPASSWORD'))
                     }
 
 extra_header_ua = { 'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.35' }
