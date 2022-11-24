@@ -4,8 +4,8 @@ from playwright.async_api import async_playwright
 
 admin_cookie = { 'name' : 'PHPSESSID',
                     # @todo - make this a secret?
-                    'value' : os.environ.get('SESSION'),
-                    'url' : os.environ.get('URL'),
+                    'value' : str(os.environ.get('SESSION')),
+                    'url' : str(os.environ.get('URL')),
                     'httpOnly' : False
                 }
 
