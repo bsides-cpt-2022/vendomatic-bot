@@ -22,6 +22,7 @@ jobs:
       with:
         path: ~/.cache/ms-playwright/
         key: ${{ runner.os }}-browsers
+        restore-keys: ${{ runner.os }}-browsers
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
       with:
