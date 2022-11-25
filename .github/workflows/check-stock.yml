@@ -7,8 +7,8 @@ on:
   schedule:
     - cron: '* * * * *'
   issues:
-    types: |
-      opened
+    types:
+      - opened
 
 permissions:
   contents: read
