@@ -4,10 +4,9 @@
 name: Stock Check
 
 on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+  schedule:
+    - cron: '* * * * *'
+
 
 permissions:
   contents: read
@@ -20,9 +19,11 @@ jobs:
     - name: Cache Playwright browsers
       uses: actions/cache@v3
       with:
-        path: ~/.cache/ms-playwright/
-        key: ${{ runner.os }}-browsers
-        restore-keys: ${{ runner.os }}-browsers
+        path: |
+          ~/.cache/ms-playwright/
+          ./.venv/
+        key: ${{ runner.os }}-browsers-venv
+        restore-keys: ${{ runner.os }}-browsers-venv
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
       with:
