@@ -32,16 +32,16 @@ jobs:
         python-version: "3.10"
     - name: Install dependencies
       if: steps.cache.outputs.cache-hit != 'true'
-      env: 
-        SESSION_ID: ${{ secrets.SESSION_ID }}
-        URL: ${{ secrets.URL }}
-        WEBUSERNAME: ${{ secrets.WEBUSERNAME }}
-        WEBPASSWORD: ${{ secrets.WEBPASSWORD }}
       run: |
         python -m pip install --upgrade pip
         python -m pip install virtualenv
         python -m venv venv
     - name: 
+      env: 
+        SESSION_ID: ${{ secrets.SESSION_ID }}
+        URL: ${{ secrets.URL }}
+        WEBUSERNAME: ${{ secrets.WEBUSERNAME }}
+        WEBPASSWORD: ${{ secrets.WEBPASSWORD }}
       run: |
         source ./venv/bin/activate
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
