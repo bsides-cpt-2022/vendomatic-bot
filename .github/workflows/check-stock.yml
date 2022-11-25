@@ -21,7 +21,7 @@ jobs:
       with:
         path: |
           ~/.cache/ms-playwright/
-          ./.venv/
+          ./venv/
         key: ${{ runner.os }}-browsers-venv
         restore-keys: ${{ runner.os }}-browsers-venv
     - name: Set up Python 3.10
@@ -36,6 +36,9 @@ jobs:
         WEBPASSWORD: ${{ secrets.WEBPASSWORD }}
       run: |
         python -m pip install --upgrade pip
+        python -m pip install --user virtualenv
+        python3 -m venv venv
+        source ./venv/bin/activate
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         playwright install
         python main.py
