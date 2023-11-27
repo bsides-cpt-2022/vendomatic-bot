@@ -3,16 +3,10 @@ import asyncio
 from playwright.async_api import async_playwright
 
 admin_cookie = { 'name' : 'PHPSESSID',
-                    # @todo - make this a secret?
                     'value' : os.environ['SESSION_ID'],
                     'url' : os.environ['URL'],
                     'httpOnly' : False
                 }
-
-http_credentials = {
-                        'username' : os.environ['WEBUSERNAME'],
-                        'password' : os.environ['WEBPASSWORD']
-                    }
 
 extra_header_ua = { 'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.35' }
 
@@ -27,7 +21,7 @@ async def main():
 
         # setup
         browser = await p.chromium.launch()
-        context = await browser.new_context(http_credentials=http_credentials)
+        context = await browser.new_context()
         await context.add_cookies([admin_cookie])
         await context.set_extra_http_headers(extra_header_ua)
         page = await context.new_page()
@@ -35,11 +29,8 @@ async def main():
         page.on("requestfailed", lambda request: print(request.url + " " + request.failure.error_text))
         page.on("request", print_request)
 
-        # @todo - point to admin page
         await page.goto(os.environ.get('URL'))
- 
         await page.wait_for_selector(selector="#grid_table", state='visible', timeout=10000)
-
         await page.evaluate('document')
 
         # the admin portal for vendomatic is feature poor
@@ -49,7 +40,7 @@ async def main():
 
         for text in texts:
             if (text.isdigit() and int(text) < 1):
-                # todo complete the email send / feedback
+                # entering this condition block means that a spiral is low on stock and we should alert the administrators via mail
                 pass
                 
 
