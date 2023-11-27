@@ -43,8 +43,6 @@ jobs:
       env: 
         SESSION_ID: ${{ secrets.SESSION_ID }}
         URL: ${{ secrets.URL }}
-        WEBUSERNAME: ${{ secrets.WEBUSERNAME }}
-        WEBPASSWORD: ${{ secrets.WEBPASSWORD }}
       run: |
         if [ -f $VIRTUAL_ENV ]; then source ./venv/bin/activate; fi 
         python main.py
