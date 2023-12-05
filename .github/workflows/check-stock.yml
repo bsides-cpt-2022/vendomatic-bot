@@ -4,8 +4,8 @@
 name: Stock Check
 
 on:
-  schedule:
-    - cron: '* * * * *'
+#  schedule:
+#    - cron: '* * * * *'
   issues:
     types:
       - opened
